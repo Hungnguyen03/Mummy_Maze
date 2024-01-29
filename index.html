@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        h1 {
+            color: black;
+            text-align: center;
+        }
+
+        #game {
+            margin-top: 41px;
+        }
+
+        #wall {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 494px;
+            height: 480px;
+            background-image: url('images/backdrop.png');
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>Mummy Maze</h1>
+        <div id="wall">
+            <canvas id="game"></canvas>
+        </div>
+    </div>
+    <script src="game.js" type="module"></script>
+</body>
+
+</html>

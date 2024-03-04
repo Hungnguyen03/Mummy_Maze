@@ -1,27 +1,16 @@
 import TileMap from "./TileMap.js";
-let canvas = document.getElementById("game");
-let ctx = canvas.getContext("2d");
+import Walls from "./Wall.js";
 
 let mapConfig = await fetch("./mapConfig.json");
 mapConfig = await mapConfig.json()
+let canvas = document.getElementById("game");
+let ctx = canvas.getContext("2d");
+let walls = new Walls(ctx);
 
-function getMap(mapConfig) {
-    let randomConfigIndex = Math.floor(Math.random() * mapConfig.length);
-    let selectedConfig = mapConfig[randomConfigIndex];
-    let randomMapIndex = Math.floor(Math.random() * selectedConfig.maps.length);
-    let selectedMap = selectedConfig.maps[randomMapIndex];
-    return { config: selectedConfig, map: selectedMap };
-}
-
-let { config, map } = getMap(mapConfig)
-let tileMap = new TileMap(config, map);
-
-let gameElement = document.getElementById('game');
-gameElement.style.backgroundImage = `url('${config.floor}')`;
-
+const tileMap = new TileMap(canvas, mapConfig, walls);
 
 function gameLoop() {
-    tileMap.draw(canvas, ctx);
+    tileMap.draw(0, 0);
 }
 
 setInterval(gameLoop, 1000 / 60);

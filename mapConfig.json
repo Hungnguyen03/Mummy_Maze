@@ -1,8 +1,7 @@
 [
     {
         "tileSize": 60,
-        "floor": "images/floor6.jpg",
-        "wall": "walls6.png",
+        "imgSize": 6,
         "maps": [
             [
                 [0, 0, 0, 0, 0, 0],
@@ -16,8 +15,7 @@
     },
     {
         "tileSize": 45,
-        "floor": "images/floor8.jpg",
-        "wall": "walls8.png",
+        "imgSize": 8,
         "maps": [
             [
                 [0, 0, 0, 0, 0, 0, 0, 0],
@@ -33,8 +31,7 @@
     },
     {
         "tileSize": 36,
-        "floor": "images/floor10.jpg",
-        "wall": "walls10.png",
+        "imgSize": 10,
         "maps": [
             [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

@@ -12,7 +12,7 @@ export default class Walls {
             leftWall[1],
             leftWall[2],
             leftWall[3],
-            column * tileSize,
+            column * tileSize - 1,
             row * tileSize - 10,
             leftWall[2],
             leftWall[3]
@@ -21,17 +21,32 @@ export default class Walls {
 
     drawWallRight(size, column, row, tileSize) {
         const { rightWall } = this.getWallSize(size);
-        this.ctx.drawImage(
-            this.wallImage,
-            rightWall[0],
-            rightWall[1],
-            rightWall[2],
-            rightWall[3],
-            (column + 1) * tileSize - rightWall[2] + 5,
-            row * tileSize - 10,
-            rightWall[2],
-            rightWall[3]
-        );
+        if (size == 6 || size == 8) {
+            this.ctx.drawImage(
+                this.wallImage,
+                rightWall[0],
+                rightWall[1],
+                rightWall[2],
+                rightWall[3],
+                (column + 1) * tileSize - rightWall[2] + 5,
+                row * tileSize - 10,
+                rightWall[2],
+                rightWall[3]
+            );
+        }
+        if (size == 10) {
+            this.ctx.drawImage(
+                this.wallImage,
+                rightWall[0],
+                rightWall[1],
+                rightWall[2],
+                rightWall[3],
+                (column + 1) * tileSize - rightWall[2] + 3,
+                row * tileSize - 11,
+                rightWall[2],
+                rightWall[3]
+            );
+        }
     }
 
     drawWallTop(size, column, row, tileSize) {
@@ -56,7 +71,7 @@ export default class Walls {
             wallSize = {
                 "leftWall": [0, 0, 12, 78],
                 "rightWall": [84, 0, 12, 78],
-                "topWall": [12, 0, 72, 18]
+                "topWall": [12, 0, 60, 18]
             }
         }
         if (size == 8) {

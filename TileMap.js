@@ -1,7 +1,5 @@
-import MovingDirection from "./MovingDirection.js";
-
 export default class TileMap {
-    constructor(canvas, mapConfig, player, walls) {
+    constructor(canvas, mapConfig, player, walls, mummyWhite) {
         this.canvas = canvas
         this.mapConfig = mapConfig
         this.map
@@ -9,12 +7,15 @@ export default class TileMap {
         this.imgSize
         this.player = player
         this.walls = walls
+        this.mummyWhite = mummyWhite
     }
-    updateMap(config, map) {
+    updateMap(config, map, mapNumber) {
         let { tileSize, imgSize } = config
         this.tileSize = tileSize
         this.imgSize = imgSize
         this.map = map
+        this.player.position = config[mapNumber].E
+        this.mummyWhite.position = config[mapNumber].MW
     }
 
     setMap(level, mapNumber) {
@@ -24,7 +25,7 @@ export default class TileMap {
             console.log("Not found map: " + level + "." + mapNumber)
             return
         }
-        this.updateMap(selectedConfig, selectedMap)
+        this.updateMap(selectedConfig, selectedMap, mapNumber)
     }
 
     draw(level, mapNumber) {
@@ -32,13 +33,12 @@ export default class TileMap {
             this.setMap(level, mapNumber)
             this.#setCanvasSize();
             this.#drawBackground();
-            this.#drawMap();
         } catch (e) {
             console.log("Error when draw map:", e)
         }
     }
 
-    #drawMap() {
+    drawMap() {
         for (let row = 0; row < this.map.length; row++) {
             for (let column = 0; column < this.map[row].length; column++) {
                 const tile = this.map[row][column];
@@ -57,6 +57,8 @@ export default class TileMap {
                 }
             }
         }
+        this.player.draw(this.imgSize, this.tileSize);
+        this.mummyWhite.draw(this.imgSize, this.tileSize);
     }
 
     #drawBackground() {

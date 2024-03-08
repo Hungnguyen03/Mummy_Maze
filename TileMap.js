@@ -1,4 +1,3 @@
-import Player from "./player.js";
 import MovingDirection from "./MovingDirection.js";
 
 export default class TileMap {

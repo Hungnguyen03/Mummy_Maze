@@ -15,5 +15,5 @@ const tileMap = new TileMap(canvas, mapConfig, player, walls);
 function gameLoop() {
     tileMap.draw(0,0);
     //player.draw(ctx);
-
+}
 setInterval(gameLoop, 1000 / 60);

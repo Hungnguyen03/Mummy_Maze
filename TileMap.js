@@ -2,15 +2,15 @@ import Player from "./player.js";
 import MovingDirection from "./MovingDirection.js";
 
 export default class TileMap {
-    constructor(canvas, mapConfig, player) {
+    constructor(canvas, mapConfig, player, walls) {
         this.canvas = canvas
         this.mapConfig = mapConfig
         this.map
         this.tileSize
         this.imgSize
         this.player = player
+        this.walls = walls
     }
-
     updateMap(config, map) {
         let { tileSize, imgSize } = config
         this.tileSize = tileSize
@@ -42,9 +42,19 @@ export default class TileMap {
     #drawMap() {
         for (let row = 0; row < this.map.length; row++) {
             for (let column = 0; column < this.map[row].length; column++) {
-                let tile = this.map[row][column];
-                if (tile == 1) {
-                    this.player.draw(this.imgSize, column, row, this.tileSize)
+                const tile = this.map[row][column];
+                switch (tile) {
+                    case 1:
+                        this.walls.drawWallLeft(this.imgSize, column, row, this.tileSize);
+                        break;
+                    case 2:
+                        this.walls.drawWallRight(this.imgSize, column, row, this.tileSize);
+                        break;
+                    case 3:
+                        this.walls.drawWallTop(this.imgSize, column, row, this.tileSize);
+                        break;
+                    default:
+                        break;
                 }
             }
         }

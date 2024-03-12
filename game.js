@@ -22,42 +22,35 @@ function check(character) {
     let y = character.position.y
     //check rìa map
     if (x == max) {
-        character.movable.right = false
-    }
-    if (y == max) {
         character.movable.down = false
     }
-    if (x == 0) {
-        character.movable.left = false
+    if (y == max) {
+        character.movable.right = false
     }
-    if (y == 0) {
+    if (x == 0) {
         character.movable.up = false
     }
+    if (y == 0) {
+        character.movable.left = false
+    }
     //check tường
-    for (let row = 0; row < map.length; row++) {
-        for (let column = 0; column < map[row].length; column++) {
-            const tile = map[x][y];
-            if (tile == 1) {
-                character.movable.left = false
-            }
-            if (tile == 2) {
-                character.movable.right = false
-            }
-            if (tile == 3) {
-                character.movable.up = false
-            }
-            if (map[x+1][y]) {
-
-            }
-            if (map[x][y+1]) {
-
-            }
-            if (map[x-1][y]) {
-
-            }
-            if (map[x][y-1]) {
-
-            }
-        }
+    const tile = map[x][y];
+    if (tile == 1) {
+        character.movable.left = false
+    }
+    if (tile == 2) {
+        character.movable.right = false
+    }
+    if (tile == 3) {
+        character.movable.up = false
+    }
+    if (y + 1 <= max && map[x][y + 1] == 1) { // next right is left wall
+        character.movable.right = false
+    }
+    if (y - 1 >= 0 && map[x][y - 1] == 2) { // next left is right wall
+        character.movable.left = false
+    }
+    if (x + 1 <= max && map[x + 1][y] == 3) { // below is up wall
+        character.movable.down = false
     }
 }

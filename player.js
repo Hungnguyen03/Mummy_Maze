@@ -43,8 +43,8 @@ export default class Player {
         this.image.src = `images/explorer${size}.png`;
         this.ctx.drawImage(
             this.image,
-            this.position.x * tileSize,
             this.position.y * tileSize,
+            this.position.x * tileSize,
             tileSize,
             tileSize
         );

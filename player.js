@@ -1,23 +1,12 @@
 export default class Player {
-    constructor(ctx){
+    constructor(ctx) {
         this.position = {
             x: null,
             y: null
         }
+        this.previousPosition = { x: null, y: null };
         this.ctx = ctx
         this.image = new Image()
-
-        this.currentMovingDirection = null;
-        this.requestedMovingDirection = null;
-
-        this.playerAnimationTimerDefault =10;
-        this.playerAnimationTimer = null;
-        this.MovingDirection = {
-            up: 0,
-            down: 1,
-            left: 2,
-            right: 3,
-        };
         this.movable = {
             up: true,
             down: true,
@@ -25,141 +14,141 @@ export default class Player {
             right: true,
         }
 
-        document.addEventListener("keydown",this.#keydown)
+        this.frameX = 0;
+        this.frameY = 2;
+        this.isAnimating = false;
+        this.isMoving = false;
+
+        document.addEventListener("keydown", this.#keydown.bind(this));
     }
-    // draw(ctx){
-    //     this.#move();
-    //     //this.#animate();
-    //     ctx.drawImage(
-    //         this.playerImages[this.playerImageIndex],
-    //         this.x,
-    //         this.y,
-    //         this.tileSize,
-    //         this.tileSize
-    //     );
-    // }
 
     draw(size, tileSize) {
+        //xoa hinh anh o vi tri cu
+        if (this.previousPosition.x !== null && this.previousPosition.y !== null) {
+            this.ctx.clearRect(
+                this.previousPosition.y * tileSize,
+                this.previousPosition.x * tileSize,
+                tileSize,
+                tileSize
+            );
+        }
+
         this.image.src = `images/explorer${size}.png`;
-        this.ctx.drawImage(
-            this.image,
+        this.ctx.clearRect(
             this.position.y * tileSize,
             this.position.x * tileSize,
             tileSize,
             tileSize
+        )
+        this.ctx.drawImage(
+            this.image,
+            this.frameX * tileSize,
+            this.frameY * tileSize,
+            tileSize,
+            tileSize,
+            this.position.y * tileSize + 9,
+            this.position.x * tileSize + 9,
+            tileSize - 15,
+            tileSize - 15
         );
+
     }
-    // #loadPlayerImages(){
-    //     const playerImage1 = new Image();
-    //     playerImage1.src = './images/explorer1.png';
 
-    //     const playerImage2 = new Image();
-    //     playerImage2.src = './images/explorer2.png';
-
-    //     const playerImage3 = new Image();
-    //     playerImage3.src = './images/explorer3.png';
-
-    //     const playerImage4 = new Image();
-    //     playerImage4.src = './images/explorer4.png';
-
-    //     this.playerImages = [
-    //         playerImage1,
-    //         playerImage2,
-    //         playerImage3,
-    //         playerImage4,
-    //     ];
-
-    //     this.playerImageIndex = 2;
-    // }
-
-    #keydown=(event)=>{
-        //up
-        if(event.keyCode == 38){
-            this.position.y--
-
-            // if(this.currentMovingDirection == this.MovingDirection.down)
-            // this.currentMovingDirection = this.MovingDirection.up;
-            // this.requestedMovingDirection = this.MovingDirection.up;
+    animate() {
+        const frameRate = 5;
+        const animateFrame = () => {
+            if (this.frameX < 4) {
+                this.frameX++;
+            } else {
+                this.frameX = 0;
+                this.isAnimating = false;
+            }
+            console.log(this.frameX)
+            if (this.isAnimating) {
+                setTimeout(() => {
+                    requestAnimationFrame(animateFrame);
+                }, 1000 / frameRate);
+            }
+        };
+        if (this.isAnimating) {
+            animateFrame();
         }
-        //down
-        if(event.keyCode == 40){
-            this.position.y++
-            // if(this.currentMovingDirection == this.MovingDirection.up)
-            // this.currentMovingDirection = this.MovingDirection.down;
-            // this.requestedMovingDirection = this.MovingDirection.down;
+    }
+
+
+    #keydown = (event) => {
+        if (this.isAnimating || this.isMoving) return;
+        this.previousPosition.x = this.position.x;
+        this.previousPosition.y = this.position.y;
+
+        let targetX = this.position.x;
+        let targetY = this.position.y;
+        switch (event.keyCode) {
+            case 38: // up arrow
+                if (this.movable.up) {
+                    targetX--;
+                    this.frameY = 0;
+                    this.isMoving = true;
+                }
+                break;
+            case 40: // down arrow
+                if (this.movable.down) {
+                    targetX++;
+                    this.frameY = 2;
+                    this.isMoving = true;
+                }
+                break;
+            case 37: // left arrow
+                if (this.movable.left) {
+                    targetY--;
+                    this.frameY = 3;
+                    this.isMoving = true;
+                }
+                break;
+            case 39: // right arrow
+                if (this.movable.right) {
+                    targetY++;
+                    this.frameY = 1;
+                    this.isMoving = true;
+                }
+                break;
+            default:
+                return;
         }
-        //left
-        if(event.keyCode == 37){
-            this.position.x--
-            // if(this.currentMovingDirection == this.MovingDirection.right)
-            // this.currentMovingDirection = this.MovingDirection.left;
-            // this.requestedMovingDirection = this.MovingDirection.left;
-        }
-        //right
-        if(event.keyCode == 39){
-            this.position.x++
-            // if(this.currentMovingDirection == this.MovingDirection.left)
-            // this.currentMovingDirection = this.MovingDirection.right;
-            // this.requestedMovingDirection = this.MovingDirection.right;
-        }
+        this.targetPosition = { x: targetX, y: targetY };
+        this.isAnimating = true;
+        this.animateInterpolation();
     };
 
-    // #move(tileSize){
-    //     if(this.currentMovingDirection !== this.requestedMovingDirection){
-    //         if(
-    //             Number.isInteger(this.x/tileSize) && 
-    //             Number.isInteger(this.y/tileSize)
-    //             )
-    //             {
-    //                 // if(
-    //                 //     !this.tileMap.didCollideWithEnvironment(
-    //                 //     this.x,
-    //                 //     this.y,
-    //                 //     this.requestedMovingDirection))
-    //                 this.currentMovingDirection = this.requestedMovingDirection;
-    //             }
-    //     }
+    animateInterpolation() {
+        const duration = 450;
+        const startTime = performance.now();
 
-    //     // if(this.tileMap.didCollideWithEnvironment(
-    //     //     this.x,
-    //     //     this.y,
-    //     //     this.currentMovingDirection))
-    //     // {
-    //     //     this.playerAnimationTimer = null;
-    //     //     return;
-    //     // }
-    //     // else if(this.currentMovingDirection != null && this.playerAnimationTimer ==null)
-    //     // {
-    //     //     this.playerAnimationTimer = this.playerAnimationTimerDefault;
-    //     // }
+        const interpolate = (start, end, progress) => {
+            return start + (end - start) * progress;
+        };
 
-    //     switch(this.currentMovingDirection){
-    //         case this.MovingDirection.up:
-    //             this.y -= 1;
-    //             break;
-    //         case this.MovingDirection.down:
-    //             this.y += 1;
-    //             break; 
-    //         case this.MovingDirection.left:
-    //             this.x -= 1;
-    //             break; 
-    //         case this.MovingDirection.right:
-    //             this.x += 1;
-    //             break;  
-    //     }
-    // }
+        const step = (timestamp) => {
+            const elapsedTime = timestamp - startTime;
+            const progress = Math.min(elapsedTime / duration, 1);
 
-    #animate(){
-       if(this.playerAnimationTimer == null) {
-        return;
-       }
-       this.playerAnimationTimer--;
-       if(this.playerAnimationTimer ==0){
-        this.playerAnimationTimer = this.playerAnimationTimerDefault;
-        this.playerImageIndex++;
-        if(this.playerImageIndex == this.playerImages.length)
-        this.playerImageIndex=0;
-       }
+            this.position.x = interpolate(this.previousPosition.x, this.targetPosition.x, progress);
+            this.position.y = interpolate(this.previousPosition.y, this.targetPosition.y, progress);
+
+            this.animate();
+
+            if (progress < 1) {
+                requestAnimationFrame(step);
+            } else {
+                this.isMoving = false;
+                this.isAnimating = false;
+                this.previousPosition.x = this.position.x;
+                this.previousPosition.y = this.position.y;
+                this.frameX = 0;
+            }
+        };
+
+        requestAnimationFrame(step);
     }
 }
 

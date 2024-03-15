@@ -17,7 +17,7 @@ export default class MummyWhite {
         this.frameY = 2;
         this.isAnimating = false;
         this.isMoving = false;
-        document.addEventListener("keydown", this.#keydown.bind(this));
+        // document.addEventListener("keydown", this.#keydown.bind(this));
 
     }
 
@@ -25,8 +25,8 @@ export default class MummyWhite {
         //xoa hinh anh o vi tri cu
         if (this.previousPosition.x !== null && this.previousPosition.y !== null) {
             this.ctx.clearRect(
-                this.previousPosition.x * tileSize,
                 this.previousPosition.y * tileSize,
+                this.previousPosition.x * tileSize,
                 tileSize,
                 tileSize
             );
@@ -34,8 +34,8 @@ export default class MummyWhite {
 
         this.image.src = `images/mummy_white${size}.png`;
         this.ctx.clearRect(
-            this.position.x * tileSize,
             this.position.y * tileSize,
+            this.position.x * tileSize,
             tileSize,
             tileSize
         )
@@ -45,8 +45,8 @@ export default class MummyWhite {
             this.frameY * tileSize,
             tileSize,
             tileSize,
-            this.position.x * tileSize + 9,
             this.position.y * tileSize + 9,
+            this.position.x * tileSize + 9,
             tileSize - 15,
             tileSize - 15
         );
@@ -75,49 +75,49 @@ export default class MummyWhite {
     }
 
 
-    #keydown = (event) => {
-        if (this.isAnimating || this.isMoving) return;
-        this.previousPosition.x = this.position.x;
-        this.previousPosition.y = this.position.y;
+    // #keydown = (event) => {
+    //     if (this.isAnimating || this.isMoving) return;
+    //     this.previousPosition.x = this.position.x;
+    //     this.previousPosition.y = this.position.y;
 
-        let targetX = this.position.x;
-        let targetY = this.position.y;
-        switch (event.keyCode) {
-            case 38: // up arrow
-                if (this.movable.up) {
-                    targetY--;
-                    this.frameY = 0;
-                    this.isMoving = true;
-                }
-                break;
-            case 40: // down arrow
-                if (this.movable.down) {
-                    targetY++;
-                    this.frameY = 2;
-                    this.isMoving = true;
-                }
-                break;
-            case 37: // left arrow
-                if (this.movable.left) {
-                    targetX--;
-                    this.frameY = 3;
-                    this.isMoving = true;
-                }
-                break;
-            case 39: // right arrow
-                if (this.movable.right) {
-                    targetX++;
-                    this.frameY = 1;
-                    this.isMoving = true;
-                }
-                break;
-            default:
-                return;
-        }
-        this.targetPosition = { x: targetX, y: targetY };
-        this.isAnimating = true;
-        this.animateInterpolation();
-    };
+    //     let targetX = this.position.x;
+    //     let targetY = this.position.y;
+    //     switch (event.keyCode) {
+    //         case 38: // up arrow
+    //             if (this.movable.up) {
+    //                 targetX--;
+    //                 this.frameY = 0;
+    //                 this.isMoving = true;
+    //             }
+    //             break;
+    //         case 40: // down arrow
+    //             if (this.movable.down) {
+    //                 targetX++;
+    //                 this.frameY = 2;
+    //                 this.isMoving = true;
+    //             }
+    //             break;
+    //         case 37: // left arrow
+    //             if (this.movable.left) {
+    //                 targetY--;
+    //                 this.frameY = 3;
+    //                 this.isMoving = true;
+    //             }
+    //             break;
+    //         case 39: // right arrow
+    //             if (this.movable.right) {
+    //                 targetY++;
+    //                 this.frameY = 1;
+    //                 this.isMoving = true;
+    //             }
+    //             break;
+    //         default:
+    //             return;
+    //     }
+    //     this.targetPosition = { x: targetX, y: targetY };
+    //     this.isAnimating = true;
+    //     this.animateInterpolation();
+    // };
 
     animateInterpolation() {
         const duration = 450;

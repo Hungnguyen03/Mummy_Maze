@@ -26,8 +26,8 @@ export default class Player {
         //xoa hinh anh o vi tri cu
         if (this.previousPosition.x !== null && this.previousPosition.y !== null) {
             this.ctx.clearRect(
-                this.previousPosition.x * tileSize,
                 this.previousPosition.y * tileSize,
+                this.previousPosition.x * tileSize,
                 tileSize,
                 tileSize
             );
@@ -35,8 +35,8 @@ export default class Player {
 
         this.image.src = `images/explorer${size}.png`;
         this.ctx.clearRect(
-            this.position.x * tileSize,
             this.position.y * tileSize,
+            this.position.x * tileSize,
             tileSize,
             tileSize
         )
@@ -46,8 +46,8 @@ export default class Player {
             this.frameY * tileSize,
             tileSize,
             tileSize,
-            this.position.x * tileSize + 9,
             this.position.y * tileSize + 9,
+            this.position.x * tileSize + 9,
             tileSize - 15,
             tileSize - 15
         );
@@ -86,28 +86,28 @@ export default class Player {
         switch (event.keyCode) {
             case 38: // up arrow
                 if (this.movable.up) {
-                    targetY--;
+                    targetX--;
                     this.frameY = 0;
                     this.isMoving = true;
                 }
                 break;
             case 40: // down arrow
                 if (this.movable.down) {
-                    targetY++;
+                    targetX++;
                     this.frameY = 2;
                     this.isMoving = true;
                 }
                 break;
             case 37: // left arrow
                 if (this.movable.left) {
-                    targetX--;
+                    targetY--;
                     this.frameY = 3;
                     this.isMoving = true;
                 }
                 break;
             case 39: // right arrow
                 if (this.movable.right) {
-                    targetX++;
+                    targetY++;
                     this.frameY = 1;
                     this.isMoving = true;
                 }

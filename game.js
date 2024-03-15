@@ -46,16 +46,16 @@ function check(character) {
             if (tile == 3) {
                 character.movable.up = false
             }
-            if (map[x+1][y]) {
+            if (map[x + 1][y]) {
 
             }
-            if (map[x][y+1]) {
+            if (map[x][y + 1]) {
 
             }
-            if (map[x-1][y]) {
+            if (map[x - 1][y]) {
 
             }
-            if (map[x][y-1]) {
+            if (map[x][y - 1]) {
 
             }
         }

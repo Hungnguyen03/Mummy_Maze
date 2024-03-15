@@ -39,6 +39,8 @@ export default class TileMap {
     }
 
     drawMap() {
+        this.player.draw(this.imgSize, this.tileSize);
+        this.mummyWhite.draw(this.imgSize, this.tileSize);
         for (let row = 0; row < this.map.length; row++) {
             for (let column = 0; column < this.map[row].length; column++) {
                 const tile = this.map[row][column];
@@ -57,8 +59,7 @@ export default class TileMap {
                 }
             }
         }
-        this.player.draw(this.imgSize, this.tileSize);
-        this.mummyWhite.draw(this.imgSize, this.tileSize);
+
     }
 
     #drawBackground() {
@@ -132,4 +133,4 @@ export default class TileMap {
     // }
 }
 
-    
+

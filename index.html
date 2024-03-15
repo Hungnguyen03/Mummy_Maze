@@ -6,40 +6,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style>
-        h1 {
-            color: black;
-            text-align: center;
-        }
-
-        #game {
-            margin-top: 41px;
-        }
-
-        #wall {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 494px;
-            height: 480px;
-            background-image: url('images/backdrop.png');
-        }
-
-        body {
-            display: flex;
-            justify-content: center;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <div id="start-screen">
+        <button id="start-button">Start</button>
+    </div>
     <div>
-        <h1>Mummy Maze</h1>
         <div id="wall">
             <canvas id="game"></canvas>
         </div>
     </div>
+    <div id="win-screen" style="display: none;">
+        <button id="new-game-button">New Game</button>
+    </div>
+
+    <div id="lose-screen" style="display: none;">
+        <button id="restart-button">Restart</button>
+        <button id="new-game-button1">New Game</button>
+    </div>
+    
+
     <script src="game.js" type="module"></script>
+    <script>
+            document.getElementById('start-button').addEventListener('click', function() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('wall').style.display = 'flex';
+        });
+    </script>
 </body>
 
 </html>

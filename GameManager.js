@@ -3,16 +3,42 @@ export default class Game {
         this.tileMap = tileMap
         this.level = 0
         this.mapNumber = 0
+
+        this.currentLevel = 0
+        this.currentMapNumber = 0
     }
     gameLoop(level, mapNumber) {
+        this.currentLevel = level
+        this.currentMapNumber = mapNumber
         this.tileMap.draw(level, mapNumber)
-        setInterval(() => { this.tileMap.drawMap(); }, 1000 / 60);
+        setInterval(() => { 
+            this.tileMap.drawMap(); 
+            this.checkExit();
+            this.checkCollision(); 
+        }, 1000 / 60);
     }
+    
+    // Add this method
+    checkCollision() {
+        const playerPosition = this.tileMap.player.position;
+        const mummyPosition = this.tileMap.mummyWhite.position;
+        if (playerPosition.x === mummyPosition.x && playerPosition.y === mummyPosition.y) {
+            this.lose();
+        }
+    }
+    
     new() {
         console.log("New game")
         this.level = 0
         this.mapNumber = 0
         this.gameLoop(0,0)
+    }   
+    checkExit() {
+        const playerPosition = this.tileMap.player.position;
+        const tileAtPlayer = this.tileMap.map[playerPosition.y][playerPosition.x];
+        if (tileAtPlayer === 6) {
+            this.pass();
+        }
     }
     pass() {
         this.mapNumber++
@@ -27,13 +53,21 @@ export default class Game {
         this.gameLoop(this.level, this.mapNumber)
     }
     restart() {
-        console.log("Restart map: " + this.level + "." + this.mapNumber)
-        this.gameLoop(this.level, this.mapNumber)
+        console.log("Restart map: " + this.currentLevel + "." + this.currentMapNumber)
+        document.getElementById('lose-screen').style.display = 'none'; 
     }
+    
+    
     lose() {
-
-    }
+        console.log("You Lose!");
+        document.getElementById('game').style.display = 'none';
+        document.getElementById('wall').style.display = 'none';
+        document.getElementById('lose-screen').style.display = 'flex';
+    }   
     win() {
-
-    }
+        console.log("You Win!");
+        document.getElementById('game').style.display = 'none';
+        document.getElementById('wall').style.display = 'none';
+        document.getElementById('win-screen').style.display = 'flex';
+    } 
 }

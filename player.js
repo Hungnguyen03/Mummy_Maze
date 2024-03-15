@@ -63,7 +63,6 @@ export default class Player {
                 this.frameX = 0;
                 this.isAnimating = false;
             }
-            console.log(this.frameX)
             if (this.isAnimating) {
                 setTimeout(() => {
                     requestAnimationFrame(animateFrame);
@@ -116,6 +115,7 @@ export default class Player {
                 return;
         }
         this.targetPosition = { x: targetX, y: targetY };
+        if (!this.isMoving) { return }
         this.isAnimating = true;
         this.animateInterpolation();
     };

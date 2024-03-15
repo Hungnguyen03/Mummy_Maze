@@ -13,7 +13,6 @@ let player = new Player(ctx)
 let mummyWhite = new MummyWhite(ctx)
 const tileMap = new TileMap(canvas, mapConfig, player, walls, mummyWhite);
 const game = new Game(tileMap)
-//let player = tileMap.getPlayer(velocity);
 game.new()
 function check(character) {
     let map = tileMap.map

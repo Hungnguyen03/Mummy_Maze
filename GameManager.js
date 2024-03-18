@@ -3,22 +3,22 @@ export default class Game {
         this.tileMap = tileMap
         this.level = 0
         this.mapNumber = 0
-
         this.currentLevel = 0
         this.currentMapNumber = 0
     }
     gameLoop(level, mapNumber) {
         this.currentLevel = level
         this.currentMapNumber = mapNumber
-        this.tileMap.draw(level, mapNumber)
-        setInterval(() => { 
+        this.tileMap.clearCanvas();
+        this.tileMap.draw(level, mapNumber);
+        this.tileMap.updateBackground(this.tileMap.imgSize);
+        this.gameInterval = setInterval(() => { 
             this.tileMap.drawMap(); 
             this.checkExit();
             this.checkCollision(); 
         }, 1000 / 60);
     }
     
-    // Add this method
     checkCollision() {
         const playerPosition = this.tileMap.player.position;
         const mummyPosition = this.tileMap.mummyWhite.position;
@@ -55,8 +55,8 @@ export default class Game {
     restart() {
         console.log("Restart map: " + this.currentLevel + "." + this.currentMapNumber)
         document.getElementById('lose-screen').style.display = 'none'; 
+        this.gameLoop(this.currentLevel, this.currentMapNumber);
     }
-    
     
     lose() {
         console.log("You Lose!");

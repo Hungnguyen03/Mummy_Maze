@@ -19,7 +19,7 @@ h1 {
     justify-content: space-around;
 }
 
-#restart-button, #new-game-button1 {
+#restart-button, #new-game-button-lose {
     padding: 10px 85px;
     background-color: rgb(218, 177, 123);
     color: rgb(107, 67, 15);

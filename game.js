@@ -53,3 +53,17 @@ function check(character) {
         character.movable.down = false
     }
 }
+    document.getElementById('new-game-button').addEventListener('click', function() {
+    document.getElementById('win-screen').style.display = 'none';
+    document.getElementById('wall').style.display = 'flex';
+});
+
+document.getElementById('new-game-button-lose').addEventListener('click', function() {
+    document.getElementById('lose-screen').style.display = 'none';
+    document.getElementById('wall').style.display = 'flex';
+});
+
+document.getElementById('restart-button').addEventListener('click', function() {
+    document.getElementById('lose-screen').style.display = 'none';
+    document.getElementById('wall').style.display = 'flex';
+});

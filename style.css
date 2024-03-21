@@ -1,0 +1,111 @@
+h1 {
+    color: black;
+    text-align: center;
+}
+
+#lose-screen {
+    background-image: url('images/gameover.png');
+    width: 854px;
+    height: 480px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-size: cover;
+    display: flex;
+    justify-content: space-around;
+}
+
+#restart-button, #new-game-button-lose {
+    padding: 10px 85px;
+    background-color: rgb(218, 177, 123);
+    color: rgb(107, 67, 15);
+    font-size: medium;
+    font-weight: bold;
+    position: relative; 
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+
+#win-screen {
+    background-image: url('images/gamewin.png');
+    width: 854px;
+    height: 480px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-size: cover;
+}
+
+#new-game-button {
+    padding: 10px 85px;
+    background-color: rgb(218, 177, 123);
+    color: rgb(107, 67, 15);
+    font-size: medium;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 12px;
+    margin-top: 27.5%;
+}
+
+#game {
+    margin-top: 41px;
+}
+
+#wall {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 494px;
+    height: 480px;
+    background-image: url('images/backdrop.png');
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#start-screen {
+    background-image: url('images/start.jpg');
+    width: 854px;
+    height: 480px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-size: cover;
+
+}
+
+#start-button {
+    padding: 10px 85px;
+    background-color: rgb(218, 177, 123);
+    color: rgb(107, 67, 15);
+    font-size: medium;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 12px;
+    margin-top: 27.5%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    background-image: linear-gradient(to right, #e2e2e2,#c9d6ff);
+}

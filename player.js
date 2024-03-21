@@ -1,5 +1,6 @@
-export default class Player {
+export default class Player extends EventTarget {
     constructor(ctx) {
+        super()
         this.position = {
             x: null,
             y: null
@@ -82,6 +83,7 @@ export default class Player {
 
         let targetX = this.position.x;
         let targetY = this.position.y;
+        this.dispatchEvent(new CustomEvent('check'))
         switch (event.keyCode) {
             case 38: // up arrow
                 if (this.movable.up) {
@@ -145,6 +147,7 @@ export default class Player {
                 this.previousPosition.x = this.position.x;
                 this.previousPosition.y = this.position.y;
                 this.frameX = 0;
+                this.dispatchEvent(new CustomEvent('check'))
             }
         };
 

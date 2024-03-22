@@ -13,6 +13,7 @@ let player = new Player(ctx)
 let mummyWhite = new MummyWhite(ctx)
 const tileMap = new TileMap(ctx, canvas, mapConfig, player, walls, mummyWhite);
 const game = new Game(tileMap)
+
 player.addEventListener('check', async (event) => {
     game.checkMovable(player)
 });

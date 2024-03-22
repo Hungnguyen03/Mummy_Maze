@@ -1,5 +1,6 @@
 export default class TileMap {
-    constructor(canvas, mapConfig, player, walls, mummyWhite) {
+    constructor(ctx, canvas, mapConfig, player, walls, mummyWhite) {
+        this.ctx = ctx
         this.canvas = canvas
         this.mapConfig = mapConfig
         this.map
@@ -8,6 +9,7 @@ export default class TileMap {
         this.player = player
         this.walls = walls
         this.mummyWhite = mummyWhite
+        this.imageExit = new Image();
     }
 
     clearCanvas() {
@@ -60,12 +62,65 @@ export default class TileMap {
                     case 3:
                         this.walls.drawWallTop(this.imgSize, column, row, this.tileSize);
                         break;
+                    case 6:
+                        this.drawExit(column, row);
                     default:
                         break;
                 }
             }
         }
 
+    }
+
+    drawExit(column, row) {
+        this.imageExit.src = `images/key${this.imgSize}.png`;
+        this.ctx.clearRect(
+            row * this.tileSize,
+            column * this.tileSize,
+            this.tileSize,
+            this.tileSize
+        )
+        this.ctx.drawImage(
+            this.imageExit,
+            row * this.tileSize,
+            column * this.tileSize,
+            this.tileSize,
+            this.tileSize
+        );
+    }
+
+    clearPlayer() {
+        const playerPosition = this.player.position;
+        this.ctx.clearRect(
+            playerPosition.y * this.tileSize,
+            playerPosition.x * this.tileSize,
+            this.tileSize,
+            this.tileSize
+        );
+    }
+
+    clearMummy() {
+        const mummyPosition = this.mummyWhite.position;
+        this.ctx.clearRect(
+            mummyPosition.y * this.tileSize,
+            mummyPosition.x * this.tileSize,
+            this.tileSize,
+            this.tileSize
+        );
+    }
+
+    drawCollisionImage(x, y) {
+        const collisionImage = new Image();
+        collisionImage.src = `images/whitefight${this.imgSize}.png`;
+        collisionImage.onload = () => {
+            this.ctx.drawImage(
+                collisionImage,
+                y * this.tileSize,
+                x * this.tileSize,
+                this.tileSize,
+                this.tileSize
+            );
+        };
     }
 
     #drawBackground() {

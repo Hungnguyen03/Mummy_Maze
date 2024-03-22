@@ -11,7 +11,7 @@ let ctx = canvas.getContext("2d");
 let walls = new Walls(ctx);
 let player = new Player(ctx)
 let mummyWhite = new MummyWhite(ctx)
-const tileMap = new TileMap(canvas, mapConfig, player, walls, mummyWhite);
+const tileMap = new TileMap(ctx, canvas, mapConfig, player, walls, mummyWhite);
 const game = new Game(tileMap)
 game.new()
 player.addEventListener('check', async (event) => {

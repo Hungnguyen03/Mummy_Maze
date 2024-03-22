@@ -19,7 +19,7 @@ export default class Game {
     
     checkCollision(playerPosition, mummyPosition) {
         if (playerPosition.x === mummyPosition.x && playerPosition.y === mummyPosition.y) {
-            this.lose();
+            this.lose(mummyPosition.x, mummyPosition.y);
         }
     }
     
@@ -105,12 +105,18 @@ export default class Game {
         document.getElementById('lose-screen').style.display = 'none'; 
         this.gameLoop(this.currentLevel, this.currentMapNumber);
     }
-    
-    lose() {
-        console.log("You Lose!");
-        document.getElementById('wall').style.display = 'none';
-        document.getElementById('lose-screen').style.display = 'flex';
-    }   
+
+    lose(positionX, positionY) {
+        this.tileMap.clearPlayer();
+        this.tileMap.clearMummy();
+        this.tileMap.drawCollisionImage(positionX, positionY);
+        setTimeout(() => {
+            console.log("You Lose!");
+            document.getElementById('game').style.display = 'none';
+            document.getElementById('wall').style.display = 'none';
+            document.getElementById('lose-screen').style.display = 'flex';
+        }, 2500);
+    }
     win() {
         console.log("You Win!");
         document.getElementById('wall').style.display = 'none';

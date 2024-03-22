@@ -10,11 +10,6 @@ export default class TileMap {
         this.mummyWhite = mummyWhite
     }
 
-    updateBackground(imgSize) {
-        let gameElement = document.getElementById('game');
-        gameElement.style.backgroundImage = `url('images/floor${imgSize}.jpg')`;
-    }
-
     clearCanvas() {
         const context = this.canvas.getContext('2d');
         context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -25,9 +20,8 @@ export default class TileMap {
         this.tileSize = tileSize
         this.imgSize = imgSize
         this.map = map
-        this.player.position = config[mapNumber].E
-        this.mummyWhite.position = config[mapNumber].MW
-        
+        this.player.position = Object.assign({}, config[mapNumber].E);
+        this.mummyWhite.position = Object.assign({}, config[mapNumber].MW);
     }
 
     setMap(level, mapNumber) {

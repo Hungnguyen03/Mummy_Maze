@@ -64,6 +64,7 @@ export default class TileMap {
                         break;
                     case 6:
                         this.drawExit(column, row);
+                        break;
                     default:
                         break;
                 }
@@ -75,15 +76,15 @@ export default class TileMap {
     drawExit(column, row) {
         this.imageExit.src = `images/key${this.imgSize}.png`;
         this.ctx.clearRect(
-            row * this.tileSize,
             column * this.tileSize,
+            row * this.tileSize,
             this.tileSize,
             this.tileSize
         )
         this.ctx.drawImage(
             this.imageExit,
-            row * this.tileSize,
             column * this.tileSize,
+            row * this.tileSize,
             this.tileSize,
             this.tileSize
         );
@@ -109,14 +110,14 @@ export default class TileMap {
         );
     }
 
-    drawCollisionImage(x, y) {
+    drawCollisionImage(position) {
         const collisionImage = new Image();
         collisionImage.src = `images/whitefight${this.imgSize}.png`;
         collisionImage.onload = () => {
             this.ctx.drawImage(
                 collisionImage,
-                y * this.tileSize,
-                x * this.tileSize,
+                position.y * this.tileSize,
+                position.x * this.tileSize,
                 this.tileSize,
                 this.tileSize
             );

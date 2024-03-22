@@ -19,7 +19,7 @@ export default class Game {
     
     checkCollision(playerPosition, mummyPosition) {
         if (playerPosition.x === mummyPosition.x && playerPosition.y === mummyPosition.y) {
-            this.lose(mummyPosition.x, mummyPosition.y);
+            this.lose(playerPosition);
         }
     }
     
@@ -90,10 +90,10 @@ export default class Game {
 
     pass() {
         this.mapNumber++
-        if (this.mapNumber > 2) {
+        if (this.mapNumber >= 2) {
             this.mapNumber = 0
             this.level++
-            if (this.level > 2) {
+            if (this.level >= 2) {
                 this.win()
                 return
             }
@@ -106,13 +106,13 @@ export default class Game {
         this.gameLoop(this.currentLevel, this.currentMapNumber);
     }
 
-    lose(positionX, positionY) {
+    lose(playerPosition) {
+        clearInterval(this.gameInterval)
         this.tileMap.clearPlayer();
         this.tileMap.clearMummy();
-        this.tileMap.drawCollisionImage(positionX, positionY);
+        this.tileMap.drawCollisionImage(playerPosition);
         setTimeout(() => {
             console.log("You Lose!");
-            document.getElementById('game').style.display = 'none';
             document.getElementById('wall').style.display = 'none';
             document.getElementById('lose-screen').style.display = 'flex';
         }, 2500);

@@ -17,10 +17,73 @@ export default class MummyWhite {
         this.frameY = 2;
         this.isAnimating = false;
         this.isMoving = false;
-        // document.addEventListener("keydown", this.#keydown.bind(this));
-
+        this.moveCount = 0;
     }
-
+    move(playerPosition) {
+        if (this.isAnimating || this.isMoving) return;
+    
+        // Kiểm tra xem xác ướp đã di chuyển 2 ô chưa
+        if (this.moveCount >= 2) return;
+    
+        this.previousPosition.x = this.position.x;
+        this.previousPosition.y = this.position.y;
+    
+        const possibleMoves = [];
+    
+        const distanceX = Math.abs(playerPosition.x - this.position.x);
+        const distanceY = Math.abs(playerPosition.y - this.position.y);
+    
+        // Tìm các bước di chuyển có thể của xác ướp
+        if (distanceX >= distanceY) {
+            if (this.position.y < playerPosition.y && this.movable.down) {
+                possibleMoves.push({ x: this.position.x + 1, y: this.position.y });
+            }
+            if (this.position.y > playerPosition.y && this.movable.up) {
+                possibleMoves.push({ x: this.position.x - 1, y: this.position.y });
+            }
+            if (this.position.x < playerPosition.x && this.movable.right) {
+                possibleMoves.push({ x: this.position.x, y: this.position.y + 1 });
+            }
+            if (this.position.x > playerPosition.x && this.movable.left) {
+                possibleMoves.push({ x: this.position.x, y: this.position.y - 1 });
+            }
+        } else {
+            if (this.position.x < playerPosition.x && this.movable.right) {
+                possibleMoves.push({ x: this.position.x, y: this.position.y + 1 });
+            }
+            if (this.position.x > playerPosition.x && this.movable.left) {
+                possibleMoves.push({ x: this.position.x, y: this.position.y - 1 });
+            }
+            if (this.position.y < playerPosition.y && this.movable.down) {
+                possibleMoves.push({ x: this.position.x + 1, y: this.position.y });
+            }
+            if (this.position.y > playerPosition.y && this.movable.up) {
+                possibleMoves.push({ x: this.position.x - 1, y: this.position.y });
+            }
+        }
+    
+        let optimalMove = null;
+        let minDistance = Infinity;
+        possibleMoves.forEach(move => {
+            const dist = Math.abs(playerPosition.x - move.x) + Math.abs(playerPosition.y - move.y);
+            if (dist < minDistance) {
+                minDistance = dist;
+                optimalMove = move;
+            }
+        });
+    
+        if (optimalMove) {
+            this.targetPosition = optimalMove;
+            this.isAnimating = true;
+            this.isMoving = true;
+            this.animateInterpolation();
+            this.moveCount++; 
+        }
+    }
+    
+    resetMoveCount() {
+        this.moveCount = 0;
+    }    
     draw(size, tileSize) {
         //xoa hinh anh o vi tri cu
         if (this.previousPosition.x !== null && this.previousPosition.y !== null) {

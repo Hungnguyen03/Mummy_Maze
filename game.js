@@ -13,7 +13,6 @@ let player = new Player(ctx)
 let mummyWhite = new MummyWhite(ctx)
 const tileMap = new TileMap(ctx, canvas, mapConfig, player, walls, mummyWhite);
 const game = new Game(tileMap)
-
 player.addEventListener('check', async (event) => {
     game.checkMovable(player)
 });
@@ -33,6 +32,7 @@ player.addEventListener('checkWin', async (event) => {
 
 mummyWhite.addEventListener('checkWin', async (event) => {
     game.check(player, mummyWhite)
+    mummyWhite.move(player.position);
 });
 
 document.getElementById('start-button').addEventListener('click', function() {

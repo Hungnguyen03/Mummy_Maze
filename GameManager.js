@@ -114,13 +114,17 @@ export default class Game {
         setTimeout(() => {
             console.log("You Lose!");
             document.getElementById('wall').style.display = 'none';
-            document.getElementById('lose-screen').style.display = 'flex';
+            const loseScreen = document.getElementById('lose-screen');
+            loseScreen.style.display = 'flex';
+            loseScreen.classList.add('show-screen');
         }, 2500);
     }
     win() {
         console.log("You Win!");
         document.getElementById('wall').style.display = 'none';
-        document.getElementById('win-screen').style.display = 'flex';
+        const winScreen = document.getElementById('win-screen');
+        winScreen.style.display = 'flex';
+        winScreen.classList.add('show-screen');
     }
     reset() {
         clearInterval(this.gameInterval)

@@ -1,5 +1,6 @@
-export default class MummyWhite {
+export default class MummyWhite extends EventTarget {
     constructor(ctx) {
+        super()
         this.ctx = ctx
         this.position = {
             x: null,
@@ -20,6 +21,7 @@ export default class MummyWhite {
     }
     move(playerPosition) {
         if (this.isAnimating || this.isMoving) return;
+        this.dispatchEvent(new CustomEvent('check'))
         this.previousPosition.x = this.position.x;
         this.previousPosition.y = this.position.y;
         let possibleMoves = []; // Lưu trữ các bước di chuyển có thể
@@ -40,6 +42,7 @@ export default class MummyWhite {
 
         // Lựa chọn hướng di chuyển
         let chosenMove = possibleMoves[0]; // Mặc định là hướng đầu tiên
+        if (!chosenMove) return
         let minDistance = Math.abs(playerX - chosenMove.x) + Math.abs(playerY - chosenMove.y);
         // Tìm hướng di chuyển tối ưu để giảm khoảng cách Manhattan
         for (let i = 1; i < possibleMoves.length; i++) {
@@ -142,6 +145,7 @@ export default class MummyWhite {
                 this.previousPosition.x = this.position.x;
                 this.previousPosition.y = this.position.y;
                 this.frameX = 0;
+                this.dispatchEvent(new CustomEvent('checkWin'))
             }
         };
 

@@ -19,6 +19,7 @@ export default class Player extends EventTarget {
         this.frameY = 2;
         this.isAnimating = false;
         this.isMoving = false;
+        this.disableKey = false
 
         document.addEventListener("keydown", this.#keydown.bind(this));
     }
@@ -77,6 +78,7 @@ export default class Player extends EventTarget {
 
 
     #keydown = (event) => {
+        if (this.disableKey) return
         if (this.isAnimating || this.isMoving) return;
         this.previousPosition.x = this.position.x;
         this.previousPosition.y = this.position.y;
@@ -90,6 +92,7 @@ export default class Player extends EventTarget {
                     targetX--;
                     this.frameY = 0;
                     this.isMoving = true;
+                    this.disableKey = true
                 }
                 break;
             case 40: // down arrow
@@ -97,6 +100,7 @@ export default class Player extends EventTarget {
                     targetX++;
                     this.frameY = 2;
                     this.isMoving = true;
+                    this.disableKey = true
                 }
                 break;
             case 37: // left arrow
@@ -104,6 +108,7 @@ export default class Player extends EventTarget {
                     targetY--;
                     this.frameY = 3;
                     this.isMoving = true;
+                    this.disableKey = true
                 }
                 break;
             case 39: // right arrow
@@ -111,6 +116,7 @@ export default class Player extends EventTarget {
                     targetY++;
                     this.frameY = 1;
                     this.isMoving = true;
+                    this.disableKey = true
                 }
                 break;
             default:
@@ -147,7 +153,7 @@ export default class Player extends EventTarget {
                 this.previousPosition.x = this.position.x;
                 this.previousPosition.y = this.position.y;
                 this.frameX = 0;
-                this.dispatchEvent(new CustomEvent('check'))
+                this.dispatchEvent(new CustomEvent('checkWin'))
             }
         };
 

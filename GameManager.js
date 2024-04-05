@@ -115,7 +115,7 @@ export default class Game {
             const loseScreen = document.getElementById('lose-screen');
             loseScreen.style.display = 'flex';
             loseScreen.classList.add('show-screen');
-        }, 2500);
+        }, 1000);
     }
     win() {
         console.log("You Win!");

@@ -10,6 +10,7 @@ export default class TileMap {
         this.walls = walls
         this.mummyWhite = mummyWhite
         this.imageExit = new Image();
+        this.type = true;
     }
 
     clearCanvas() {
@@ -23,7 +24,13 @@ export default class TileMap {
         this.imgSize = imgSize
         this.map = map
         this.player.position = Object.assign({}, config[mapNumber].E);
-        this.mummyWhite.position = Object.assign({}, config[mapNumber].MW);
+        if (config[mapNumber].MR) {
+            this.mummyWhite.position = Object.assign({}, config[mapNumber].MR);
+            this.type = false;
+        } else {
+            this.mummyWhite.position = Object.assign({}, config[mapNumber].MW);
+            this.type = true;
+        }
     }
 
     setMap(level, mapNumber) {
@@ -48,7 +55,7 @@ export default class TileMap {
 
     drawMap() {
         this.player.draw(this.imgSize, this.tileSize);
-        this.mummyWhite.draw(this.imgSize, this.tileSize);
+        this.mummyWhite.draw(this.imgSize, this.tileSize, this.type);
         for (let row = 0; row < this.map.length; row++) {
             for (let column = 0; column < this.map[row].length; column++) {
                 const tile = this.map[row][column];
@@ -112,7 +119,7 @@ export default class TileMap {
 
     drawCollisionImage(position) {
         const collisionImage = new Image();
-        collisionImage.src = `images/whitefight${this.imgSize}.png`;
+        collisionImage.src = this.type ? `images/whitefight${this.imgSize}.png` : `images/redfight${this.imgSize}.png`;
         collisionImage.onload = () => {
             this.ctx.drawImage(
                 collisionImage,

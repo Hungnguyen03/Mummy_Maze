@@ -75,8 +75,6 @@ export default class Game {
     }
 
     check(player, mummyWhite) {
-        this.checkMovable(player)
-        this.checkMovable(mummyWhite)
         this.checkCollision(player.position, mummyWhite.position)
         this.checkExit(player.position)
     }

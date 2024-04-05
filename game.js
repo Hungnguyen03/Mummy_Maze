@@ -32,7 +32,7 @@ player.addEventListener('checkWin', async (event) => {
 
 mummyWhite.addEventListener('checkWin', async (event) => {
     game.check(player, mummyWhite)
-    mummyWhite.move(player.position);
+    mummyWhite.move(player.position,'MW');
 });
 
 document.getElementById('start-button').addEventListener('click', function() {

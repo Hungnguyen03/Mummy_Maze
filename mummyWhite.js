@@ -18,8 +18,9 @@ export default class MummyWhite extends EventTarget {
         this.frameY = 2;
         this.isAnimating = false;
         this.isMoving = false;
+        this.type = true;
     }
-    move(playerPosition, type) {
+    move(playerPosition) {
         if (this.isAnimating || this.isMoving) return;
         this.dispatchEvent(new CustomEvent('check'))
         this.previousPosition.x = this.position.x;
@@ -35,12 +36,12 @@ export default class MummyWhite extends EventTarget {
         if (manhattanDistance === 0) return;
    
         // Thử tất cả các hướng di chuyển và lưu vào mảng possibleMoves
-        if (type === 'MW') { 
+        if (this.type) { 
             if (y > playerY && this.movable.left) possibleMoves.push({ x, y: y - 1 });
             if (y < playerY && this.movable.right) possibleMoves.push({ x, y: y + 1 });
             if (x > playerX && this.movable.up) possibleMoves.push({ x: x - 1, y });
             if (x < playerX && this.movable.down) possibleMoves.push({ x: x + 1, y });
-        } else if (type === 'MR') { 
+        } else { 
             if (x > playerX && this.movable.up) possibleMoves.push({ x: x - 1, y });
             if (x < playerX && this.movable.down) possibleMoves.push({ x: x + 1, y });
             if (y > playerY && this.movable.left) possibleMoves.push({ x, y: y - 1 });

@@ -18,6 +18,7 @@ export default class MummyWhite extends EventTarget {
         this.frameY = 2;
         this.isAnimating = false;
         this.isMoving = false;
+        this.type = true;
     }
     move(playerPosition) {
         if (this.isAnimating || this.isMoving) return;
@@ -27,19 +28,25 @@ export default class MummyWhite extends EventTarget {
         let possibleMoves = []; // Lưu trữ các bước di chuyển có thể
         const { x: playerX, y: playerY } = playerPosition;
         const { x, y } = this.position;
-        
+
         // Tính khoảng cách Manhattan giữa xác ướp và người chơi
         const manhattanDistance = Math.abs(playerX - x) + Math.abs(playerY - y);
-
+    
         // Kiểm tra nếu khoảng cách đã đạt tối đa, thì không cần di chuyển nữa
         if (manhattanDistance === 0) return;
-
+   
         // Thử tất cả các hướng di chuyển và lưu vào mảng possibleMoves
-        if (y > playerY && this.movable.left) possibleMoves.push({ x, y: y - 1 });
-        if (y < playerY && this.movable.right) possibleMoves.push({ x, y: y + 1 });
-        if (x > playerX && this.movable.up) possibleMoves.push({ x: x - 1, y });
-        if (x < playerX && this.movable.down) possibleMoves.push({ x: x + 1, y });
-
+        if (this.type) { 
+            if (y > playerY && this.movable.left) possibleMoves.push({ x, y: y - 1 });
+            if (y < playerY && this.movable.right) possibleMoves.push({ x, y: y + 1 });
+            if (x > playerX && this.movable.up) possibleMoves.push({ x: x - 1, y });
+            if (x < playerX && this.movable.down) possibleMoves.push({ x: x + 1, y });
+        } else { 
+            if (x > playerX && this.movable.up) possibleMoves.push({ x: x - 1, y });
+            if (x < playerX && this.movable.down) possibleMoves.push({ x: x + 1, y });
+            if (y > playerY && this.movable.left) possibleMoves.push({ x, y: y - 1 });
+            if (y < playerY && this.movable.right) possibleMoves.push({ x, y: y + 1 });
+        }
         // Lựa chọn hướng di chuyển
         let chosenMove = possibleMoves[0]; // Mặc định là hướng đầu tiên
         if (!chosenMove) return
@@ -52,16 +59,16 @@ export default class MummyWhite extends EventTarget {
                 chosenMove = move;
                 minDistance = distance;
             }
-        }     
+        }
         // Cập nhật hình ảnh sau cùng khi mummy di chuyển
         if (chosenMove.y > this.previousPosition.y) {
-            this.frameY = 1; 
+            this.frameY = 1;
         } else if (chosenMove.y < this.previousPosition.y) {
-            this.frameY = 3; 
+            this.frameY = 3;
         } else if (chosenMove.x < this.previousPosition.x) {
-            this.frameY = 0; 
+            this.frameY = 0;
         } else if (chosenMove.x > this.previousPosition.x) {
-            this.frameY = 2; 
+            this.frameY = 2;
         }
             this.isAnimating = true;            
             this.isMoving = true;

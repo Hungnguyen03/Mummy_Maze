@@ -76,7 +76,7 @@ export default class MummyWhite extends EventTarget {
             this.animateInterpolation();
     }  
 
-    draw(size, tileSize, type) {
+    draw(size, tileSize) {
         //xoa hinh anh o vi tri cu
         if (this.previousPosition.x !== null && this.previousPosition.y !== null) {
             this.ctx.clearRect(
@@ -86,7 +86,7 @@ export default class MummyWhite extends EventTarget {
                 tileSize
             );
         }
-        const mummyImage = type ? `images/mummy_white${size}.png` : `images/redmummy${size}.png`;
+        const mummyImage = this.type ? `images/mummy_white${size}.png` : `images/redmummy${size}.png`;
         this.image.src = mummyImage;
         this.ctx.clearRect(
             this.position.y * tileSize,

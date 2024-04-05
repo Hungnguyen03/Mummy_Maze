@@ -119,6 +119,10 @@ export default class Player extends EventTarget {
                     this.disableKey = true
                 }
                 break;
+            case 32: //stay
+                    this.isMoving = true;
+                    this.disableKey = true
+                break;
             default:
                 return;
         }
